@@ -40,7 +40,3 @@ We welcome contributions! Please fork this repository and create a pull request 
 ## Contact
 
 For questions or suggestions, please open an issue or contact nahidkhanshuvo7@gmail.com
-
----
-
-Feel free to customize it further based on your project specifics!
