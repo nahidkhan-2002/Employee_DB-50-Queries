@@ -1,0 +1,392 @@
+1.Find the name of the company where John Doe works
+ans :
+SELECT company_name 
+FROM works 
+JOIN employee ON works.employee_id = employee.employee_id 
+WHERE employee_name = 'John Doe';
+
+
+2.List all employees who work for google 
+ans:
+SELECT employee_name 
+FROM works 
+JOIN employee ON works.employee_id = employee.employee_id 
+WHERE company_name = 'Google';
+
+3.find the salary of alice brown
+and :
+SELECT salary 
+FROM works 
+JOIN employee ON works.employee_id = employee.employee_id 
+WHERE employee_name = 'Alice Brown';
+
+4.List all companies in which employees live in 'Mountain View'.
+ans:
+SELECT DISTINCT company_name 
+FROM works 
+JOIN employee ON works.employee_id = employee.employee_id 
+WHERE employee_city = 'Mountain View';
+
+5.Find the name and city of all employees with a salary greater than 110000.
+ans:
+SELECT employee_name, employee_city 
+FROM works 
+JOIN employee ON works.employee_id = employee.employee_id 
+WHERE salary > 110000;
+
+6.List the names of all managers and the employees they manage.
+ans:
+SELECT manager_name, employee_name 
+FROM manager 
+JOIN employee ON manager.employee_id = employee.employee_id;
+
+7.Find the average salary of employees working at Amazon.
+ans:
+SELECT AVG(salary) AS average_salary 
+FROM works 
+WHERE company_name = 'Amazon';
+
+8.Count the number of employees living in 'Cupertino'.
+ans:
+SELECT COUNT(*) AS number_of_employees 
+FROM employee 
+WHERE employee_city = 'Cupertino';
+
+9.List the names of employees and their respective company names who live in 'Seattle'.
+ans:
+SELECT employee_name, company_name 
+FROM works 
+JOIN employee ON works.employee_id = employee.employee_id 
+WHERE employee_city = 'Seattle';
+
+
+10.Find the highest salary among all employees.
+ans:
+SELECT MAX(salary) AS highest_salary 
+FROM works;
+
+11.List all companies and their respective number of employees.
+ans:
+SELECT company_name, COUNT(*) AS number_of_employees 
+FROM works 
+GROUP BY company_name;
+
+12.Find the name of the employee with the lowest salary.
+ans:
+SELECT employee_name 
+FROM works 
+JOIN employee ON works.employee_id = employee.employee_id 
+WHERE salary = (SELECT MIN(salary) FROM works);
+
+13.List all employees who do not live in 'Redmond'.
+ans:
+SELECT employee_name 
+FROM employee 
+WHERE employee_city != 'Redmond';
+
+14.Find the total salary paid by each company.
+ans:
+SELECT company_name, SUM(salary) AS total_salary 
+FROM works 
+GROUP BY company_name;
+
+15.Find the names of all employees and their managers.
+ans:
+SELECT employee_name, manager_name 
+FROM manager 
+JOIN employee ON manager.employee_id = employee.employee_id;
+
+16.List all employees who work at 'Apple'.
+ans:
+SELECT employee_name 
+FROM works JOIN employee ON works.employee_id = employee.employee_id 
+WHERE company_name = 'Apple';
+
+17.Find the manager of 'Charlie Davis'.
+ans:
+SELECT manager_name 
+FROM manager JOIN employee ON manager.employee_id = employee.employee_id 
+WHERE employee_name = 'Charlie Davis';
+
+18.Find the city of the company where 'Jane Smith' works.
+ans:
+SELECT city 
+FROM company 
+JOIN works ON company.company_name = works.company_name 
+JOIN employee ON works.employee_id = employee.employee_id 
+WHERE employee_name = 'Jane Smith';
+
+19.Count the number of companies each manager is managing employees in.
+ans:
+SELECT manager_name, COUNT(DISTINCT company_name) AS number_of_companies 
+FROM manager JOIN works ON manager.employee_id = works.employee_id 
+GROUP BY manager_name;
+
+20.List all employees, their respective companies, and their salaries.
+ans:
+SELECT employee_name, company_name, salary 
+FROM works 
+JOIN employee ON works.employee_id = employee.employee_id;
+
+21.Find the total number of employees working in each city.
+ans:
+SELECT employee_city, COUNT(*) AS number_of_employees 
+FROM employee 
+GROUP BY employee_city;
+
+22.List all employees with their salaries and a label indicating if their salary is above or below 100000.
+ans:
+SELECT employee_name, salary,
+       CASE
+           WHEN salary > 100000 THEN 'Above 100000'
+           ELSE 'Below 100000'
+       END AS salary_label
+FROM works 
+JOIN employee ON works.employee_id = employee.employee_id;
+
+23.Find the average salary of employees in each company.
+ans:
+SELECT company_name, AVG(salary) AS average_salary 
+FROM works 
+GROUP BY company_name;
+
+24.Count the number of employees managed by each manager.
+ans:
+SELECT manager_name, COUNT(*) AS number_of_employees_managed FROM manager 
+GROUP BY manager_name;
+
+25.List the names of all employees and the first three characters of their names.
+ans:
+SELECT employee_name, SUBSTRING(employee_name, 1, 3) AS name_prefix 
+FROM employee;
+
+26.Find the total salary paid to employees living in each city.
+ans:
+SELECT employee_city, SUM(salary) AS total_salary 
+FROM works 
+JOIN employee ON works.employee_id = employee.employee_id 
+GROUP BY employee_city;
+
+27.List all companies with the number of employees having salaries greater than 110000.
+ans:
+SELECT company_name, COUNT(*) AS number_of_high_salary_employees 
+FROM works 
+WHERE salary > 110000 
+GROUP BY company_name;
+
+28.Find the maximum and minimum salary in each company.
+ans:
+SELECT company_name, MAX(salary) AS max_salary, MIN(salary) AS min_salary 
+FROM works 
+GROUP BY company_name;
+
+29.List the employees whose names start with 'A'.
+ans:
+SELECT employee_name 
+FROM employee 
+WHERE employee_name LIKE 'A%';
+
+30.Find the total number of companies where employees are managed by 'Emma Thompson'.
+ans:
+SELECT COUNT(DISTINCT company_name) AS number_of_companies 
+FROM works 
+JOIN manager ON works.employee_id = manager.employee_id 
+WHERE manager_name = 'Emma Thompson';
+
+31.Find the company that pays the highest average salary.
+ans:
+SELECT company_name 
+FROM works 
+GROUP BY company_name 
+ORDER BY AVG(salary) DESC LIMIT 1;
+
+32.List all employees and their salaries in descending order of salary.
+ans:
+SELECT employee_name, salary 
+FROM works 
+JOIN employee ON works.employee_id = employee.employee_id 
+ORDER BY salary DESC;
+
+33.Find the name of the employee with the second-highest salary.
+ans:
+SELECT employee_name 
+FROM works 
+JOIN employee ON works.employee_id = employee.employee_id 
+ORDER BY salary DESC LIMIT 1 OFFSET 1;
+
+34.List the companies where the total salary paid is greater than 300000.
+ans:
+SELECT company_name 
+FROM works 
+GROUP BY company_name HAVING SUM(salary) > 300000;
+
+35.Find the total number of employees whose names contain the letter 'e'.
+ans:
+SELECT COUNT(*) AS number_of_employees 
+FROM employee 
+WHERE employee_name LIKE '%e%';
+
+36.List the names of employees along with their respective companies, ordered by employee name.
+ans:
+SELECT employee_name, company_name 
+FROM works 
+JOIN employee ON works.employee_id = employee.employee_id 
+ORDER BY employee_name;
+
+37.Calculate the average salary of employees managed by 'Olivia Wilde'.
+ans:
+SELECT AVG(salary) AS average_salary 
+FROM works 
+JOIN manager ON works.employee_id = manager.employee_id 
+WHERE manager_name = 'Olivia Wilde';
+
+38.List the cities where the number of employees is greater than 1.
+ans:
+SELECT employee_city 
+FROM employee 
+GROUP BY employee_city HAVING COUNT(*) > 1;
+
+39.Find the length of each employee's name.
+ans:
+SELECT employee_name, LENGTH(employee_name) AS name_length 
+FROM employee;
+
+40.List the companies and the number of employees whose salary is between 90000 and 110000.
+ans:
+SELECT company_name, COUNT(*) AS number_of_employees 
+FROM works 
+WHERE salary BETWEEN 90000 AND 110000 
+GROUP BY company_name;
+
+41.Increase the salary by 10% for employees working at 'Google', and decrease the salary by 5% for those working at 'Amazon':
+ans:
+UPDATE works
+SET salary = CASE
+               WHEN company_name = 'Google' THEN salary * 1.10
+               WHEN company_name = 'Amazon' THEN salary * 0.95
+               ELSE salary
+             END;
+
+
+42.Increase the salary by 5000 for employees whose current salary is less than 100000, and by 2000 for those whose salary is between 100000 and 120000:
+ans:
+UPDATE works
+SET salary = CASE
+               WHEN salary < 100000 THEN salary + 5000
+               WHEN salary BETWEEN 100000 AND 120000 THEN salary + 2000
+               ELSE salary
+             END;
+
+
+
+43.Set a bonus of 3000 for employees working in 'Redmond', and 2000 for those working in 'Mountain View':
+ans:
+UPDATE works
+SET salary = salary + CASE
+                        WHEN employee_city = 'Redmond' THEN 3000
+                        WHEN employee_city = 'Mountain View' THEN 2000
+                        ELSE 0
+                      END
+FROM employee
+WHERE works.employee_id = employee.employee_id;
+
+
+44.Decrease the salary by 1000 for employees who have 'Manager' in their name, and by 500 for those who do not:
+ans:
+UPDATE works
+SET salary = salary - CASE
+                        WHEN employee_name LIKE '%Manager%' THEN 1000
+                        ELSE 500
+                      END
+FROM employee
+WHERE works.employee_id = employee.employee_id;
+
+
+45.Increase the salary by 8% for employees managed by 'Emma Stone', and by 6% for those managed by 'Liam Neeson':
+ans:
+UPDATE works
+SET salary = salary * CASE
+                        WHEN manager_name = 'Emma Stone' THEN 1.08
+                        WHEN manager_name = 'Liam Neeson' THEN 1.06
+                        ELSE 1
+                      END
+FROM manager
+WHERE works.employee_id = manager.employee_id;
+
+
+46.Find the name of the highest-paid employee in each company and their respective salary
+ans:
+SELECT company_name, employee_name, salary
+FROM works AS w
+JOIN employee AS e ON w.employee_id = e.employee_id
+WHERE salary = (
+    SELECT MAX(salary)
+    FROM works
+    WHERE company_name = w.company_name
+);
+
+47.List the names of employees who work for companies where the average salary is greater than 110000
+ans:
+SELECT employee_name
+FROM works AS w
+JOIN employee AS e ON w.employee_id = e.employee_id
+WHERE company_name IN (
+    SELECT company_name
+    FROM works
+    GROUP BY company_name
+    HAVING AVG(salary) > 110000
+);
+
+
+48.Find the total salary paid by each manager to the employees they manage
+ans:
+SELECT manager_name, SUM(salary) AS total_salary
+FROM manager AS m
+JOIN works AS w ON m.employee_id = w.employee_id
+GROUP BY manager_name;
+
+
+49.List the names of employees who earn more than the average salary of employees in their city
+ans:
+SELECT employee_name
+FROM works AS w
+JOIN employee AS e ON w.employee_id = e.employee_id
+WHERE salary > (
+    SELECT AVG(salary)
+    FROM works
+    JOIN employee ON works.employee_id = employee.employee_id
+    WHERE employee_city = e.employee_city
+);
+
+50.Find the cities where the total salary paid to employees exceeds 200000
+ans:
+SELECT employee_city, SUM(salary) AS total_salary
+FROM works AS w
+JOIN employee AS e ON w.employee_id = e.employee_id
+GROUP BY employee_city
+HAVING SUM(salary) > 200000;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
